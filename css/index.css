@@ -1,0 +1,8 @@
+.melody__img{
+    width: 300px;
+}
+#productos{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
