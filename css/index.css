@@ -1,8 +1,37 @@
-.melody__img{
+ul {
+    list-style: none;
+}
+
+.pointer{
+    cursor: pointer
+}
+.img{
     width: 300px;
 }
-#productos{
+#productos__lista{
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
+.img__producto{
+    width: 100px;
+}
+#carrito__conteiner{
+    background-color:rgb(251, 211, 255);
+    flex-direction: column;
+}
+.carrito__header{
+    display: flex;
+    justify-content: space-around;
+}
+.carrito__lista{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.total__contenido{
+    display: flex;
+    justify-content: center;
+}
+
+
