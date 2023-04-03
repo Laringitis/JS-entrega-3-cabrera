@@ -2,11 +2,10 @@ const listaProductos= document.getElementById("productos__lista");
 const verCarrito = document.getElementById("ver__carrito");
 const productos= document.getElementById("productos");
 const articulo= document.getElementsByClassName("articulo");
-const carritoConteiner= document.getElementById("carrito__conteiner")
+const carritoConteiner= document.getElementById("carrito__conteiner");
 
 
-const guardarCompra= () =>{
-    localStorage.setItem ("guardarCompra", JSON.stringify(carrito))};
+
 let carrito= JSON.parse(localStorage.getItem("guardarCompra")) || [];
 
 producto.forEach((product) => {
@@ -30,10 +29,11 @@ producto.forEach((product) => {
                 precio: product.precio,
                 img: product.img,
             });
-            guardarCompra();
+            console.log(carrito);
         });
 });
-
+const guardarCompra= () => {
+    localStorage.setItem ("guardarCompra", JSON.stringify(carrito))};
 
 
 verCarrito.addEventListener("click", ()=>{
@@ -53,12 +53,14 @@ verCarrito.addEventListener("click", ()=>{
             visualCarrito.append(cerrarCarrito);
 
     carrito.forEach((product)=>{
-        let carritoContent=document.createElement ("div");
+        let carritoContent = document.createElement ("div");
         carritoContent.className="carrito__lista";
         carritoContent.innerHTML=`
         <img class="img__producto" src= "${product.img}">
         <h3 class="lista titulo__producto">${product.nombre}</h3>
-        <p class="lista">${product.precio}</p>`
+        <p class="lista">${product.precio}</p>
+        <button class="boton__delete">x</button>
+        `;
             carritoConteiner.append(carritoContent)            
         })
 
@@ -67,5 +69,18 @@ verCarrito.addEventListener("click", ()=>{
         totalBuying.className= "total__contenido";
         totalBuying.innerHTML= `total a pagar: ${total} $`;
             carritoConteiner.append(totalBuying)
-});
+    
+    let botonDelete = carritoContent.querySelector(".boton__delete")
+    botonDelete.addEventListener("click", ()=>{
+        borrarProducto(producto.id)
+    })
+    let borrarProducto = (id) =>{
+        let foundId= carrito.find((product) => product.id === id);
+        console.log(foundId);
+    
+        carrito = carrito.filter ((carritoId) => {
+            return carritoId !== foundId;
+        });
+    }
+})
 
