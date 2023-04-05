@@ -23,16 +23,6 @@ producto.forEach((product) => {
         content.append(comprar);
 
         comprar.addEventListener("click", () =>{
-            toast.info('Producto agregado', {
-                position: "bottom-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-                });
             carrito.push({
                 id:product.id,
                 nombre:product.nombre,
