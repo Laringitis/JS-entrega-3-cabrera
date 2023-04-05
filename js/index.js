@@ -29,6 +29,8 @@ producto.forEach((product) => {
                 precio: product.precio,
                 img: product.img,
             });
+            guardarCompra();
+            alertaAgregado();
             console.log(carrito);
         });
 });
@@ -37,7 +39,7 @@ const guardarCompra= () => {
     localStorage.setItem ("guardarCompra", JSON.stringify(carrito))
 };
 
-const construirCarrito=()=>{
+const construirCarrito= () => {
 carritoConteiner.innerHTML="";
 carritoConteiner.style.display= "flex";
 const visualCarrito = document.createElement("div");
@@ -80,23 +82,31 @@ carrito.forEach((product)=>{
     eliminar.addEventListener("click", ()=>{
         eliminarProducto(product.id);
     })
-    // let eliminar= document.createElement("button")
-    //     eliminar.innerText="x"
-    //     carritoIndividual.append(eliminar)
-    //     eliminar.addEventListener("click", eliminarProducto)
-
-    })
-    
+    guardarCompra()
+})
     
     const total= carrito.reduce((acc,el) => acc + el.precio,0)
     const totalBuying= document.createElement("div");
     totalBuying.className= "total__contenido";
     totalBuying.innerHTML= `total a pagar: ${total} $`;
     carritoConteiner.append(totalBuying)
-    
-    
-    
 }
 
-verCarrito.addEventListener("click", construirCarrito());
+verCarrito.addEventListener("click", () =>{
+    construirCarrito();
+})
 
+//toastify//
+function alertaAgregado () {
+Toastify({
+
+    text: "¡Producto agregado!",
+    duration: 2000,
+    gravity: "bottom",
+    position: "left",
+    style: {
+        background: "rgb(255,201,0)",
+        background: "radial-gradient(circle, rgba(255,201,0,1) 0%, rgba(253,45,196,1) 100%)",
+    },
+    }).showToast();
+}
