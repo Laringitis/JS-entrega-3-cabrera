@@ -3,7 +3,7 @@ const verCarrito = document.getElementById("ver__carrito");
 const productos= document.getElementById("productos");
 const articulo= document.getElementsByClassName("articulo");
 const carritoConteiner= document.getElementById("carrito__conteiner");
-
+const titulo= document.getElementsByClassName("titulo")
 
 
 let carrito= JSON.parse(localStorage.getItem("guardarCompra")) || [];
@@ -23,6 +23,7 @@ producto.forEach((product) => {
         content.append(comprar);
 
         comprar.addEventListener("click", () =>{
+        const repeat = carrito.some((repeatProduct) => repeatProduct.id === product.id);
             carrito.push({
                 id:product.id,
                 nombre:product.nombre,
@@ -109,4 +110,52 @@ Toastify({
         background: "radial-gradient(circle, rgba(255,201,0,1) 0%, rgba(253,45,196,1) 100%)",
     },
     }).showToast();
+}
+
+//ubicacion//
+navigator.geolocation.getCurrentPosition(mostrarUbicacion);
+
+function mostrarUbicacion (pos){
+    const latitud= pos.coords.latitude;
+    const long= pos.coords.longitude;
+    console.log (latitud, long)
+    //api clima//
+    fetch (`https://api.openweathermap.org/data/2.5/weather?lat=${latitud}&lon=${long}&appid=4aedee8100501fd1c48a59e3da401501&upits=metric&lang=es`)
+        .then (response=>response.json())
+        .then (data=>{
+            console.log(data)
+            const clima= document.createElement("div");
+            clima.innerHTML= `<p>¡${data.weather[0].description} el clima ideal para comprar! </p>
+            `
+            carritoConteiner.append(clima)
+            })
+
+//     //api maps//
+//     function initMap() {
+//         const bounds = new google.maps.LatLngBounds();
+//         const markersArray = [];
+//         const map = new google.maps.Map(document.getElementById("map"), {
+//         center: { lat: 55.53, lng: 9.4 },
+//         zoom: 10,
+//         });
+//         const geocoder = new google.maps.Geocoder();
+//     const service = new google.maps.DistanceMatrixService();
+//     const origin = { latitud, long };
+//     const destination= { lat: -34.6037389, lng: -58.3815704 };
+
+//     function callback(status) {
+//         if (status == 'OK') {
+//         let distance = element.distance.text;
+//         console.log(distance)
+//     }
+//     }
+//     service.getDistanceMatrix({
+//         origins: [origin],
+//         destinations: [destination],
+//         travelMode: google.maps.TravelMode.DRIVING,
+//         unitSystem: google.maps.UnitSystem.METRIC,
+//         avoidHighways: false,
+//         avoidTolls: false,
+//     }, callback);
+// }
 }
